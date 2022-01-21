@@ -46,7 +46,7 @@ namespace Catalog.API.Repositories
         }
 
         // Creates Product
-        public async Task CreateProducts(Product product)
+        public async Task CreateProduct(Product product)
         {
             await _context.Products.InsertOneAsync(product);
         }
@@ -68,7 +68,7 @@ namespace Catalog.API.Repositories
         }
 
         // Deletes Product
-        public async Task<bool> DeleteProducts(string id)
+        public async Task<bool> DeleteProduct(string id)
         {
             FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.ID, id);
 
