@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   catalogdb:
-    container_name: Catalogdb
+    container_name: catalogdb
     restart: always
     ports:
       - "27017:27017"
@@ -10,10 +10,20 @@ services:
       - mongo_data:/data/db
 
   basketdb:
-    container_name: basketgdb
+    container_name: basketdb
     restart: always
     ports:
       - "6379:6379"
+
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8002:8002"
+      - "9000:9000"
+    volumes:    
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 
   catalog.api:
     container_name: catalog.api
