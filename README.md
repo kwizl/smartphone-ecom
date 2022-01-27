@@ -6,6 +6,7 @@ It is a web application where people people can purchase smartphones online
 - .NET 5
 - ASP.NET Core 5.0
 - Docker
+- Redis
 - MongoDB
 - PostgreSQL
 - SQL Server
@@ -32,10 +33,10 @@ To get a local copy up and running, follow these simple example steps.
 
 ### Prerequisites
 
-.NET 5: 2.6.3
-Docker: 5.2.3
-RabbitMQ
-Visual Studio 2017 or 2019 
+- .NET 5: 2.6.3
+- Docker: 5.2.3
+- RabbitMQ
+- Visual Studio 2017 or 2019 
 
 ### Setup
 
