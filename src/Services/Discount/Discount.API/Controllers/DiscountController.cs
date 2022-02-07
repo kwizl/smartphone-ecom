@@ -27,15 +27,16 @@ namespace Discount.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Coupon))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Coupon))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Coupon))]
         public async Task<ActionResult<Coupon>> CreateDiscount([FromBody] Coupon coupon)
         {
             await _repository.CreateDiscount(coupon);
             return CreatedAtRoute("GetDiscount", new { productName = coupon.ProductName }, coupon);
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Coupon))]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(Coupon))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Coupon))]
         public async Task<ActionResult<Coupon>> UpdateDiscount([FromBody] Coupon coupon)
         {
