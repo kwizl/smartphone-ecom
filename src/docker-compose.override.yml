@@ -13,7 +13,7 @@ services:
     container_name: basketdb
     restart: always
     ports:
-      - "6379:6379"
+      - "5006:6379"
         
   discountdb:
     container_name: discountdb
@@ -76,5 +76,5 @@ services:
     depends_on:
       - discountdb
     ports:
-      - "8002:80"
+      - "8003:80"
 

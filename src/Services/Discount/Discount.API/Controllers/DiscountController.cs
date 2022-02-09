@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Discount.API.Entities;
 using Discount.API.Repositories;
@@ -12,14 +13,14 @@ namespace Discount.API.Controllers
     public class DiscountController : ControllerBase
     {
         private readonly IDiscountRepository _repository;
+
         public DiscountController(IDiscountRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("{productName}", Name="GetDiscount")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Coupon))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Coupon))]
+        [HttpGet("{productName}", Name = "GetDiscount")]
+        [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Coupon>> GetDiscount(string productName)
         {
             var coupon = await _repository.GetDiscount(productName);
@@ -27,8 +28,7 @@ namespace Discount.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Coupon))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Coupon))]
+        [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Coupon>> CreateDiscount([FromBody] Coupon coupon)
         {
             await _repository.CreateDiscount(coupon);
@@ -36,11 +36,17 @@ namespace Discount.API.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(Coupon))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Coupon))]
+        [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Coupon>> UpdateDiscount([FromBody] Coupon coupon)
         {
             return Ok(await _repository.UpdateDiscount(coupon));
+        }
+
+        [HttpDelete("{productName}", Name = "DeleteDiscount")]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<bool>> DeleteDiscount(string productName)
+        {
+            return Ok(await _repository.DeleteDiscount(productName));
         }
     }
 }
