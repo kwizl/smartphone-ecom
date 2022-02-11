@@ -20,7 +20,7 @@ namespace Discount.API.Controllers
         }
 
         [HttpGet("{productName}", Name = "GetDiscount")]
-        [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Coupon))]
         public async Task<ActionResult<Coupon>> GetDiscount(string productName)
         {
             var coupon = await _repository.GetDiscount(productName);
@@ -28,7 +28,7 @@ namespace Discount.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Coupon))]
         public async Task<ActionResult<Coupon>> CreateDiscount([FromBody] Coupon coupon)
         {
             await _repository.CreateDiscount(coupon);
@@ -36,17 +36,32 @@ namespace Discount.API.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Coupon))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Coupon))]
         public async Task<ActionResult<Coupon>> UpdateDiscount([FromBody] Coupon coupon)
         {
-            return Ok(await _repository.UpdateDiscount(coupon));
+            var updated = await _repository.UpdateDiscount(coupon);
+
+            if (updated == false)
+            {
+                return NotFound(coupon);
+            }
+
+            return NoContent();
         }
 
         [HttpDelete("{productName}", Name = "DeleteDiscount")]
-        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<bool>> DeleteDiscount(string productName)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Coupon))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(EmptyResult))]
+        public async Task<ActionResult<Coupon>> DeleteDiscount(string productName)
         {
-            return Ok(await _repository.DeleteDiscount(productName));
+            var coupon = await _repository.DeleteDiscount(productName);
+
+            if (coupon == false)
+            {
+                return NotFound(coupon);
+            }
+            return Ok(coupon);
         }
     }
 }
