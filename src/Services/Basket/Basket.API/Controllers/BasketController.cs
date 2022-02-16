@@ -30,6 +30,9 @@ namespace Basket.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(ShoppingCart))]
         public async Task<ActionResult<ShoppingCart>> UpdateBasket([FromBody] ShoppingCart basket)
         {
+            // TODO : Communicate with Discount Grpc 
+            // Calaculate latest proces of product into shopping cart
+            
             return Ok(await _repository.UpdateBasket(basket));
         }
 
