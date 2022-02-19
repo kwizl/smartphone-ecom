@@ -10,7 +10,7 @@ COPY ["Services/Discount/Discount.Grpc/Discount.Grpc.csproj", "Services/Discount
 RUN dotnet restore "Services/Discount/Discount.Grpc/Discount.Grpc.csproj"
 COPY . .
 WORKDIR "/src/Services/Discount/Discount.Grpc"
-RUN dotnet build "Discount.Grpc.csproj" -c Release -o /app/build
+RUN dotnet build --disable-parallel "Discount.Grpc.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "Discount.Grpc.csproj" -c Release -o /app/publish
