@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{CCC95B68-1F63-479D-948E-9C5B02B5A91A}"
 EndProject
@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API", "Services\Bask
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{F7A34738-D93E-43DF-A8CB-A1E3D5C7E69A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.API", "Services\Discount\Discount.API\Discount.API.csproj", "{B4A5F11E-2F67-40AA-B006-B5D4B761BB67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.API", "Services\Discount\Discount.API\Discount.API.csproj", "{B4A5F11E-2F67-40AA-B006-B5D4B761BB67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Grpc", "Services\Discount\Discount.Grpc\Discount.Grpc.csproj", "{A3124DD0-EC4E-41ED-87F8-D467616125E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{B4A5F11E-2F67-40AA-B006-B5D4B761BB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4A5F11E-2F67-40AA-B006-B5D4B761BB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4A5F11E-2F67-40AA-B006-B5D4B761BB67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3124DD0-EC4E-41ED-87F8-D467616125E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3124DD0-EC4E-41ED-87F8-D467616125E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3124DD0-EC4E-41ED-87F8-D467616125E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3124DD0-EC4E-41ED-87F8-D467616125E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{51FEA17D-A608-4B24-84DA-B4DD7C42E87D} = {4C7A5523-BAF5-45DF-92C4-5F71FFFE5286}
 		{F7A34738-D93E-43DF-A8CB-A1E3D5C7E69A} = {CCC95B68-1F63-479D-948E-9C5B02B5A91A}
 		{B4A5F11E-2F67-40AA-B006-B5D4B761BB67} = {F7A34738-D93E-43DF-A8CB-A1E3D5C7E69A}
+		{A3124DD0-EC4E-41ED-87F8-D467616125E2} = {F7A34738-D93E-43DF-A8CB-A1E3D5C7E69A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C80492A-7DD4-49AB-BFF5-DB69082A9FF8}
