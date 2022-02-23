@@ -2,7 +2,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 
-namespace Ordering.Application.Orders.Queries.GetOrdersList
+namespace Ordering.Application.Features.Orders.Queries.GetOrdersList
 {
     public class GetOrdersListQuery : IRequest<List<OrdersVM>>
     {
