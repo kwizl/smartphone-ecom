@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordering.Application.Features.Orders.Queries.GetOrdersList
+namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
 {
-    public class OrdersVM
+    public class UpdateOrderCommand : IRequest
     {
         public int ID { get; set; }
         public string UserName { get; set; }
