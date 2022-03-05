@@ -22,6 +22,7 @@ namespace Ordering.Infrastructure.Mail
             _logger = logger;
         }
 
+        // Sends email using SendGrid
         public async Task<bool> SendEmail(Email email)
         {
             var client = new SendGridClient(_emailSettings.ApiKey);
