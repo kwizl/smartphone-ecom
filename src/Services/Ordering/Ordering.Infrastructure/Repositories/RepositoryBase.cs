@@ -20,6 +20,7 @@ namespace Ordering.Infrastructure.Repositories
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        // Adds Order
         public async Task<T> AddAsync(T entity)
         {
             _dbContext.Set<T>().Add(entity);
