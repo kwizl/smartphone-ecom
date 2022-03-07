@@ -10,6 +10,7 @@ namespace Ordering.API.Extensions
 {
     public static class HostExtensions
     {
+        // Migration method for automatically creating database when the docker application is started
         public static IHost MigrateDatabase<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder, int? retry = 0) where TContext : DbContext
         {
             int retryForAvailability = retry.Value;
@@ -17,7 +18,11 @@ namespace Ordering.API.Extensions
             using(var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+
+                // Throws exception if the service is not found, that the logger may log the error
                 var logger = services.GetRequiredService<ILogger<TContext>>();
+
+                // Returns null if the service is not found
                 var context = services.GetService<TContext>();
 
                 try

@@ -15,7 +15,9 @@ namespace Ordering.Infrastructure.Persistence
         {
             if (!orderContext.Orders.Any())
             {
+                // Adds object into the database
                 orderContext.Orders.AddRange(GetPreconfiguredOrders());
+                
                 await orderContext.SaveChangesAsync();
                 logger.LogInformation("Seed databasae associated with context {DbContextName}", typeof(OrderContext).Name);
             }
