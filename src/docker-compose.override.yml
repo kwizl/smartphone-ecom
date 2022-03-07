@@ -27,6 +27,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  orderdb:
+    container_name: mssqlserverdb
+    environment:
+      SA_PASSWORD: "OrderAPI2022!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    restart: always
+    ports:
+      - "1402:1433"
+
   pgadmin:
     container_name: pgadmin
     environment:
@@ -88,4 +98,14 @@ services:
       - discountdb
     ports:
       - "8004:80"
+
+
+  ordering.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "OrderingConnectionString:OrderingAPIConnection=Data Source=orderdbdb;Database=InnovaApi;User Id=sa;Password=OrderAPI2022!;Integrated Security=False;MultipleActiveResultSets=true;"
+    ports:
+      - "6004:80"
+    depends_on:
+      - orderdb
 
