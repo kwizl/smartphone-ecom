@@ -11,7 +11,7 @@ namespace Ordering.Infrastructure.Persistence
     public class OrderContextSeed
     {
         // Method Creates database and seeds the data
-        public static async Task SeedAsync(OrderContext orderContext, ILogger<OrderContext> logger)
+        public static async Task SeedAsync(OrderContext orderContext, ILogger<OrderContextSeed> logger)
         {
             if (!orderContext.Orders.Any())
             {
