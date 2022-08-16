@@ -5,17 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Ordering.Infrastructure.Persistence;
 
 namespace Ordering.API.Extensions
 {
     public static class HostExtensions
     {
         // Migration method for automatically creating database when the docker application is started
-        public static IHost MigrateDatabase<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder, int? retry = 0) where TContext : DbContext
+        public static IHost MigrateDatabase<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder, int? retry = 0) where TContext : OrderContext
         {
             int retryForAvailability = retry.Value;
 
-            using(var scope = host.Services.CreateScope())
+            using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
 
@@ -23,14 +24,14 @@ namespace Ordering.API.Extensions
                 var logger = services.GetRequiredService<ILogger<TContext>>();
 
                 // Returns null if the service is not found
-                var context = services.GetService<TContext>();
+                var context = services.GetRequiredService<TContext>();
 
                 try
                 {
                     logger.LogInformation("Migrating database association with context {dbContextName}", typeof(TContext).Name);
-                    
+
                     InvokeSeeder(seeder, context, services);
-                    
+
                     logger.LogInformation("Migrating database association with context {dbContextName}", typeof(TContext).Name);
                 }
                 catch (SqlException ex)
@@ -48,8 +49,9 @@ namespace Ordering.API.Extensions
             return host;
         }
 
-        private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider> seeder, TContext context, 
-            IServiceProvider services) where TContext : DbContext
+        // Migrates and Seeds data to the database
+        private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider> seeder, TContext context,
+            IServiceProvider services) where TContext : OrderContext
         {
             context.Database.Migrate();
             seeder(context, services);

@@ -18,7 +18,6 @@ namespace Ordering.Infrastructure.Persistence
 
         public DbSet<Order> Orders { get; set; }
 
-        // Automatically inputs the data for the Columns defined in the table.
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in ChangeTracker.Entries<EntityBase>())
@@ -35,7 +34,8 @@ namespace Ordering.Infrastructure.Persistence
                         break;
                 }
             }
-            return base.SaveChangesAsync(cancellationToken);    
+
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

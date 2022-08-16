@@ -15,21 +15,17 @@ namespace Ordering.Infrastructure.Persistence
         {
             if (!orderContext.Orders.Any())
             {
-                // Adds object into the database
                 orderContext.Orders.AddRange(GetPreconfiguredOrders());
-                
                 await orderContext.SaveChangesAsync();
-                logger.LogInformation("Seed databasae associated with context {DbContextName}", typeof(OrderContext).Name);
+                logger.LogInformation("Seed database associated with context {DbContextName}", typeof(OrderContext).Name);
             }
         }
 
-        // Method seeds data for the Orders table
-        public static IEnumerable<Order> GetPreconfiguredOrders()
+        private static IEnumerable<Order> GetPreconfiguredOrders()
         {
             return new List<Order>
             {
-                new Order() { UserName = "swn", FirstName = "Mehmet", LastName = "Ozkaya", EmailAddress = "ezozkme@gmail.com",
-                    AddressLine = "Bahcelievler", Country = "Turkey", TotalPrice = 350 }
+                new Order() {UserName = "swn", FirstName = "Mehmet", LastName = "Ozkaya", EmailAddress = "ezozkme@gmail.com", AddressLine = "Bahcelievler", Country = "Turkey", TotalPrice = 350 }
             };
         }
     }
