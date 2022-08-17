@@ -35,7 +35,7 @@ services:
       MSSQL_PID: "Developer"
     restart: always
     ports:
-      - "1402:1433"
+      - "1401:1433"
 
   pgadmin:
     container_name: pgadmin
@@ -99,13 +99,14 @@ services:
     ports:
       - "8004:80"
 
-
-  ordering.api:
+  ordering.api: 
+    container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "OrderingConnectionString:OrderingAPIConnection=Data Source=orderdbdb;Database=InnovaApi;User Id=sa;Password=OrderAPI2022!;Integrated Security=False;MultipleActiveResultSets=true;"
-    ports:
-      - "6004:80"
+      - "ConnectionStrings:OrderingConnectionString=Data Source=orderdb;Database=OrderDB;User Id=sa;Password=OrderAPI2022!;Integrated Security=False;MultipleActiveResultSets=true;"
     depends_on:
       - orderdb
+    ports:
+      - "6004:80"
+    
 

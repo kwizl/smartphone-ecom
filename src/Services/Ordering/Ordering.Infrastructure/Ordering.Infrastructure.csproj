@@ -5,14 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
 	<PackageReference Include="SendGrid" Version="9.25.3" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlserver" Version="5.0.0" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlserver" Version="5.0.3" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.3" />
     <PackageReference Include="Serilog" Version="2.11.0" />
   </ItemGroup>
 
@@ -23,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Migrations\SQLServerMigrations\" />
   </ItemGroup>
 
 </Project>
