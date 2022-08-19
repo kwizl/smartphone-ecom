@@ -15,9 +15,10 @@ namespace Basket.API.Controllers
         private readonly IBasketRepository _repository;
         private readonly DiscountGrpcService _discountGrpcService;
         
-        public BasketController(IBasketRepository repository)
+        public BasketController(IBasketRepository repository, DiscountGrpcService discountGrpcService)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _discountGrpcService = discountGrpcService ?? throw new ArgumentNullException(nameof(discountGrpcService));
         }
 
         [HttpGet("{userName}", Name = "GetBasket")]

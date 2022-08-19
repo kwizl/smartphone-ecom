@@ -107,6 +107,6 @@ services:
     depends_on:
       - orderdb
     ports:
-      - "6004:80"
+      - "6006:80"
     
 

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Ordering.Application.Features.Orders.Queries.GetOrdersList;
 using Ordering.Infrastructure;
 using Ordering.Infrastructure.Persistence;
 using System;
@@ -33,6 +35,8 @@ namespace Ordering.API
             services.AddApplicationServices();
 
             services.AddControllers();
+
+            services.AddMediatR(typeof(GetOrderListQueryHandler).Assembly);
 
             services.AddSwaggerGen(c =>
             {
