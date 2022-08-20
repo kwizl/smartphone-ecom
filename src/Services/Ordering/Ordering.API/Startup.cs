@@ -1,5 +1,7 @@
+using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +44,10 @@ namespace Ordering.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ordering.API", Version = "v1" });
             });
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<OrderContext>("SQL Server Database");
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +67,11 @@ namespace Ordering.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/healthchecker", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
     }

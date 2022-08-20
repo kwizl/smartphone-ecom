@@ -101,6 +101,7 @@ services:
 
   ordering.api: 
     container_name: ordering.api
+    restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:OrderingConnectionString=Data Source=orderdb;Database=OrderDB;User Id=sa;Password=OrderAPI2022!;Integrated Security=False;MultipleActiveResultSets=true;"
@@ -108,5 +109,18 @@ services:
       - orderdb
     ports:
       - "6006:80"
-    
 
+  healthchecker.ecom:
+    container_name: healthchecker.ecom
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - HealthChecksUI__HealthChecks__0__Name=Basket API
+      - HealthChecksUI__HealthChecks__0__Uri=http://host.docker.internal:8001/healthchecker
+      - HealthChecksUI__HealthChecks__1__Name=Ordering API
+      - HealthChecksUI__HealthChecks__1__Uri=http://host.docker.internal:6006/healthchecker
+    restart: always
+    ports:
+      - "6008:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -49,11 +49,18 @@ services:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
 
+  healthchecker.ecom:
+    image: ${DOCKER_REGISTRY-}healthchecker.ecom
+    build:
+      context: .
+      dockerfile: Services/Monitoring/HealthChecker/Dockerfile
+
 volumes:
   mongo_data:
   portainer_data:
   postgres_data:
   pgadmin_data:
+
 
 
 
