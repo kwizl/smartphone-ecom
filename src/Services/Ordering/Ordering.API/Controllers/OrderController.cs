@@ -7,6 +7,7 @@ using Ordering.Application.Features.Orders.Commands.UpdateOrder;
 using Ordering.Application.Features.Orders.Queries.GetOrdersList;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Ordering.API.Controllers
@@ -23,42 +24,41 @@ namespace Ordering.API.Controllers
         }
 
         [HttpGet("{userName}", Name = "GetOrder")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrdersVM>))]
+        [ProducesResponseType(typeof(IEnumerable<OrdersVM>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<OrdersVM>>> GetOrdersByUserName(string userName)
         {
             var query = new GetOrdersListQuery(userName);
             var orders = await _mediator.Send(query);
-
             return Ok(orders);
         }
 
+        // testing purpose
         [HttpPost(Name = "CheckoutOrder")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)
         {
             var result = await _mediator.Send(command);
-
             return Ok(result);
         }
 
-        [HttpPost(Name = "UpdateOrder")]
+        [HttpPut(Name = "UpdateOrder")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
         {
             await _mediator.Send(command);
-
             return NoContent();
         }
 
-        [HttpPost(Name = "DeleteOrder")]
+        [HttpDelete("{id}", Name = "DeleteOrder")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteOrder([FromBody] int id)
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> DeleteOrder(int id)
         {
             var command = new DeleteOrderCommand() { ID = id };
             await _mediator.Send(command);
-
             return NoContent();
         }
     }

@@ -17,7 +17,7 @@ namespace Ordering.Application.Behaviours
 
         public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
         {
-            _validators = validators ?? throw new ArgumentNullException(nameof(validators));
+            _validators = validators;
         }
 
         // Implements validation

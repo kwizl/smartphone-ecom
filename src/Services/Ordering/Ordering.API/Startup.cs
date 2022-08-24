@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Ordering.Application;
 using Ordering.Application.Features.Orders.Queries.GetOrdersList;
 using Ordering.Infrastructure;
 using Ordering.Infrastructure.Persistence;

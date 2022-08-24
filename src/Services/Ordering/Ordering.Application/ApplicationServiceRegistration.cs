@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.Behaviours;
 using System.Reflection;
 
-namespace Ordering.API
+namespace Ordering.Application
 {
     // Static Class for Registering Services in the API Startup
     public static class ApplicationServiceRegistration
