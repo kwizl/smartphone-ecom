@@ -59,7 +59,7 @@ namespace Basket.API
             {
                 config.UsingRabbitMq((context, configuration) =>
                 {
-                    configuration.Host(Configuration["EventSettings:HostAddress"]);
+                    configuration.Host(Configuration["EventBusSettings:HostAddress"]);
                 });
             });
 
