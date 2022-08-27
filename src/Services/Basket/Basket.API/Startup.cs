@@ -38,6 +38,9 @@ namespace Basket.API
                 options.Configuration = Configuration.GetValue<string>("CacheSettings:ConnectionString");
             });
 
+            // Mapper
+            services.AddAutoMapper(typeof(Startup));
+
             // HealthCheck for Redis Connectivity
             services.AddHealthChecks().AddRedis(Configuration["CacheSettings:ConnectionString"],
                     "Redis", HealthStatus.Degraded);
