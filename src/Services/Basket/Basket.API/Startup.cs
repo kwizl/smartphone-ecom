@@ -2,6 +2,7 @@ using Basket.API.GrpcServices;
 using Basket.API.Repositories;
 using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -49,6 +50,15 @@ namespace Basket.API
                 o => o.Address = new Uri(Configuration["GrpcSettings:DiscountUrl"])
             );
             services.AddScoped<DiscountGrpcService>();
+
+            // MassTransit & RabbitMQ
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((context, configuration) =>
+                {
+                    configuration.Host(Configuration["EventSettings:HostAddress"]);
+                });
+            });
 
             services.AddControllers();
 
