@@ -1,4 +1,6 @@
+using EventBus.Messages.Common;
 using HealthChecks.UI.Client;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Ordering.API.EventBusConsumer;
 using Ordering.Application;
 using Ordering.Application.Features.Orders.Queries.GetOrdersList;
 using Ordering.Infrastructure;
@@ -40,6 +43,20 @@ namespace Ordering.API
             services.AddControllers();
 
             services.AddMediatR(typeof(GetOrderListQueryHandler).Assembly);
+
+            // MassTransit & RabbitMQ
+            services.AddMassTransit(config =>
+            {
+                config.AddConsumer<BasketCheckoutConsumer>();
+                config.UsingRabbitMq((context, configuration) =>
+                {
+                    configuration.Host(Configuration["EventBusSettings:HostAddress"]);
+                    configuration.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
+                    {
+                        c.ConfigureConsumer<BasketCheckoutConsumer>(context);
+                    });
+                });
+            });
 
             services.AddSwaggerGen(c =>
             {
