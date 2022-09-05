@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Services/Monitoring/HealthChecker/HealthChecker.csproj", "Services/Monitoring/HealthChecker/"]
-RUN dotnet restore "Services/Monitoring/HealthChecker/HealthChecker.csproj"
+RUN dotnet restore --disable-parallel "Services/Monitoring/HealthChecker/HealthChecker.csproj"
 COPY . .
 WORKDIR "/src/Services/Monitoring/HealthChecker"
 RUN dotnet build "HealthChecker.csproj" -c Release -o /app/build
