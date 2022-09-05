@@ -58,11 +58,18 @@ services:
       context: .
       dockerfile: Services/Monitoring/HealthChecker/Dockerfile
 
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGW/Dockerfile
+
 volumes:
   mongo_data:
   portainer_data:
   postgres_data:
   pgadmin_data:
+
 
 
 
