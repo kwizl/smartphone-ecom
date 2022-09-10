@@ -27,6 +27,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  orderdb:
+    container_name: mssqlserverdb
+    environment:
+      SA_PASSWORD: "OrderAPI2022!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    restart: always
+    ports:
+      - "1401:1433"
+
   pgadmin:
     container_name: pgadmin
     environment:
@@ -48,6 +58,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
 
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   catalog.api:
     container_name: catalog.api
     environment:
@@ -64,8 +81,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CacheSettings:ConnectionString=basketdb:6379"
       - "GrpcSettings:DiscountUrl=http://discount.grpc"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - basketdb
+      - rabbitmq
     ports:
       - "8001:80"
 
@@ -89,3 +108,46 @@ services:
     ports:
       - "8004:80"
 
+  ordering.api: 
+    container_name: ordering.api
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderingConnectionString=Data Source=orderdb;Database=OrderDB;User Id=sa;Password=OrderAPI2022!;Integrated Security=False;MultipleActiveResultSets=true;"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - orderdb
+      - rabbitmq
+    ports:
+      - "6006:80"
+
+  healthchecker.ecom:
+    container_name: healthchecker.ecom
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - HealthChecksUI__HealthChecks__0__Name=Basket API
+      - HealthChecksUI__HealthChecks__0__Uri=http://host.docker.internal:8001/healthchecker
+      - HealthChecksUI__HealthChecks__1__Name=Catalog API
+      - HealthChecksUI__HealthChecks__1__Uri=http://host.docker.internal:8000/healthchecker
+      - HealthChecksUI__HealthChecks__2__Name=Discount API
+      - HealthChecksUI__HealthChecks__2__Uri=http://host.docker.internal:8003/healthchecker
+      - HealthChecksUI__HealthChecks__3__Name=Ordering API
+      - HealthChecksUI__HealthChecks__3__Uri=http://host.docker.internal:6006/healthchecker
+    restart: always
+    ports:
+      - "6008:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  ocelotapigw:
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8010:80"
