@@ -6,7 +6,7 @@ namespace Shopping.Aggregator.Models
     {
         public string UserName { get; set; }
         
-        public BasketModel BasketModel { get; set; }
+        public BasketModel BasketWithProducts { get; set; }
         
         public IEnumerable<OrderResponseModel> Orders { get; set; }
     }
