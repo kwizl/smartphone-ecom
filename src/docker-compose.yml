@@ -13,6 +13,9 @@ services:
   discountdb:  
     image: postgres
 
+  mongoclient:
+    image: mongoclient/mongoclient:4.0.0
+
   pgadmin:  
     image: dpage/pgadmin4
 
@@ -75,6 +78,7 @@ volumes:
   portainer_data:
   postgres_data:
   pgadmin_data:
+  mongoclient_data:
 
 
 

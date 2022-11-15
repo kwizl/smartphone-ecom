@@ -108,6 +108,16 @@ services:
     ports:
       - "8004:80"
 
+  mongoclient:
+    container_name: mongoclient
+    restart: always
+    environment:
+      - "MONGO_URL=mongodb://catalogdb:27017"
+    ports:
+      - "3000:3000"
+    volumes:    
+      - mongoclient_data:/data/db mongoclient/mongoclient
+
   ordering.api: 
     container_name: ordering.api
     restart: always
@@ -119,7 +129,7 @@ services:
       - orderdb
       - rabbitmq
     ports:
-      - "6006:80"
+      - "8006:80"
 
   healthchecker.ecom:
     container_name: healthchecker.ecom
