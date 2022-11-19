@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AspnetRunBasics.Services
+namespace AspnetRunBasics.Interfaces
 {
     public interface ICatalogService
     {
