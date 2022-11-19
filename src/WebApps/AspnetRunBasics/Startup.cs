@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace AspnetRunBasics
 {
@@ -21,15 +22,15 @@ namespace AspnetRunBasics
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<ICatalogService, CatalogService>(c =>
-                c.BaseAddress = new System.Uri(Configuration["ApiSettings:GatewayAddress"]
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]
             ));
 
             services.AddHttpClient<IBasketService, BasketService>(c =>
-                c.BaseAddress = new System.Uri(Configuration["ApiSettings:GatewayAddress"]
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]
             ));
 
             services.AddHttpClient<IOrderService, OrderService>(c =>
-                c.BaseAddress = new System.Uri(Configuration["ApiSettings:GatewayAddress"]
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]
             ));
 
             services.AddRazorPages();
