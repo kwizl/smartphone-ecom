@@ -10,7 +10,7 @@ namespace Catalog.API.Repositories
     {
         Task<IEnumerable<Product>> GetProducts();
 
-        Task<IEnumerable<Product>> GetProduct(string id);
+        Task<Product> GetProduct(string id);
 
         Task<IEnumerable<Product>> GetProductByName(string name);
 

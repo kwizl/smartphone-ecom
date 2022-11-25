@@ -38,13 +38,14 @@ namespace Catalog.API.Controllers
         [HttpGet("{ID:length(24)}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Product))]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByID(string ID)
+        public async Task<ActionResult<Product>> GetProductByID(string ID)
         {
             var product = await _repository.GetProduct(ID);
 
             if (product == null)
             {
                 _logger.LogError($"Product with ID: {ID}, not found");
+                return NotFound();
             }
 
             return Ok(product);

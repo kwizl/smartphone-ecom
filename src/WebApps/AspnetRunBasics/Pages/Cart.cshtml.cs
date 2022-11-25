@@ -27,12 +27,12 @@ namespace AspnetRunBasics
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRemoveToCartAsync(string productId)
+        public async Task<IActionResult> OnPostRemoveToCartAsync(string ProductID)
         {
             var userName = "swn";
             var basket = await _basketService.GetBasket(userName);
 
-            var item = basket.Items.Single(x => x.ProductId == productId);
+            var item = basket.Items.Single(x => x.ProductID == ProductID);
             basket.Items.Remove(item);
 
             return RedirectToPage();

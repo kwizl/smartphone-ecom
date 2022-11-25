@@ -9,7 +9,6 @@ using EventBus.Messages.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Ordering.Domain.Entities;
 
 namespace Basket.API.Controllers
 {

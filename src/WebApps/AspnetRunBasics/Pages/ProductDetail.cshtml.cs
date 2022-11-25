@@ -26,14 +26,14 @@ namespace AspnetRunBasics
         [BindProperty]
         public int Quantity { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string productId)
+        public async Task<IActionResult> OnGetAsync(string ProductID)
         {
-            if (productId == null)
+            if (ProductID == null)
             {
                 return NotFound();
             }
 
-            Product = await _catalogService.GetCatalog(productId);
+            Product = await _catalogService.GetCatalog(ProductID);
             if (Product == null)
             {
                 return NotFound();
@@ -41,16 +41,16 @@ namespace AspnetRunBasics
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddToCartAsync(string productId)
+        public async Task<IActionResult> OnPostAddToCartAsync(string ProductID)
         {
-            var product = await _catalogService.GetCatalog(productId);
+            var product = await _catalogService.GetCatalog(ProductID);
 
             var userName = "swn";
             var basket = await _basketService.GetBasket(userName);
 
             basket.Items.Add(new BasketItemModel
             {
-                ProductId = productId,
+                ProductID = ProductID,
                 ProductName = product.Name,
                 Price = product.Price,
                 Quantity = 1,
