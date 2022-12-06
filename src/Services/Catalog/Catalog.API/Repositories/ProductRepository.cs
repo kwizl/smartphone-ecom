@@ -24,9 +24,9 @@ namespace Catalog.API.Repositories
         }
 
         // Queries Product by ID
-        public async Task<IEnumerable<Product>> GetProduct(string id)
+        public async Task<Product> GetProduct(string id)
         {
-            return await _context.Products.Find(p => p.ID == id).ToListAsync();
+            return await _context.Products.Find(p => p.ID == id).FirstOrDefaultAsync();
         }
 
         // Queries Product by category

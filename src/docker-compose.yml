@@ -26,7 +26,7 @@ services:
     image: rabbitmq:3-management-alpine
 
   catalog.api:
-    image: ${DOCKER_REGISTRY-}catalogapi
+    image: ${DOCKER_REGISTRY-}kwizl1234/catalogapi
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
@@ -38,19 +38,19 @@ services:
       dockerfile: Services/Basket/Basket.API/Dockerfile
 
   discount.api:
-    image: ${DOCKER_REGISTRY-}discountapi
+    image: ${DOCKER_REGISTRY-kwizl1234/}discountapi
     build:
       context: .
       dockerfile: Services/Discount/Discount.API/Dockerfile
 
   discount.grpc:
-    image: ${DOCKER_REGISTRY-}discountgrpc
+    image: ${DOCKER_REGISTRY-}kwizl1234/discountgrpc
     build:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
 
   ordering.api:
-    image: ${DOCKER_REGISTRY-}orderingapi
+    image: ${DOCKER_REGISTRY-}kwizl1234/orderingapi
     build:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
@@ -68,10 +68,16 @@ services:
       dockerfile: ApiGateways/OcelotApiGW/Dockerfile
 
   shopping.aggregator:
-    image: ${DOCKER_REGISTRY-}shoppingaggregator
+    image: ${DOCKER_REGISTRY-}kwizl1234/shoppingaggregator
     build:
       context: .
       dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
+
+  aspnetrunbasics:
+    image: ${DOCKER_REGISTRY-}kwizl1234/aspnetrunbasics
+    build:
+      context: .
+      dockerfile: WebApps/AspnetRunBasics/Dockerfile
 
 volumes:
   mongo_data:
@@ -79,6 +85,7 @@ volumes:
   postgres_data:
   pgadmin_data:
   mongoclient_data:
+
 
 
 

@@ -13,7 +13,7 @@ services:
     container_name: basketdb
     restart: always
     ports:
-      - "5006:6379"
+      - "5008:6379"
         
   discountdb:
     container_name: discountdb
@@ -176,3 +176,19 @@ services:
       - ordering.api
     ports:
       - "8005:80"
+
+  aspnetrunbasics:
+    container_name: aspnetrunbasics
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    depends_on:
+      - ocelotapigw
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8009:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
