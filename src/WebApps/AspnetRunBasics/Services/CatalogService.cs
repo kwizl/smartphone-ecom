@@ -19,19 +19,19 @@ namespace AspnetRunBasics.Services
 
         public async Task<IEnumerable<CatalogModel>> GetCatalog()
         {
-            var response = await _client.GetAsync("/api/v1/Catalog");
+            var response = await _client.GetAsync("/Catalog");
             return await response.ReadContentAs<List<CatalogModel>>();
         }
 
         public async Task<CatalogModel> GetCatalog(string id)
         {
-            var response = await _client.GetAsync($"/api/v1/Catalog/{id}");
+            var response = await _client.GetAsync($"/Catalog/{id}");
             return await response.ReadContentAs<CatalogModel>();
         }
 
         public async Task<IEnumerable<CatalogModel>> GetCatalogByCategory(string category)
         {
-            var response = await _client.GetAsync("/api/v1/Catalog/GetProductByCategory/{category}");
+            var response = await _client.GetAsync("/Catalog/GetProductByCategory/{category}");
             return await response.ReadContentAs<List<CatalogModel>>();
         }
 

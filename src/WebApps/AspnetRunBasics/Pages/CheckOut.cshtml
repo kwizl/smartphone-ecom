@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                    <label for="address2">Address 2 <span class="text-muted">(Required)</span></label>
                     <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
                 </div>
 
@@ -112,20 +112,58 @@
                         <label asp-for="Order.Country" for="country">Country</label>
                         <select asp-for="Order.Country" class="custom-select d-block w-100" id="country" required>
                             <option value="">Choose...</option>
+                            <option>Angola</option>
+                            <option>Brazil</option>
+                            <option>Burundi</option>
+                            <option>Botswana</option>
+                            <option>Canada</option>
+                            <option>China</option>
+                            <option>Czech</option>
+                            <option>Columbia</option>
+                            <option>Demark</option>
+                            <option>Djibouti</option>
+                            <option>Egypt</option>
+                            <option>Ethiopia</option>
+                            <option>Eritrea</option>
+                            <option>France</option>
+                            <option>Fiji</option>
+                            <option>Gabon</option>
+                            <option>India</option>
+                            <option>Israel</option>
+                            <option>Jamaica</option>
+                            <option>Japan</option>
+                            <option>Kenya</option>
+                            <option>Kazakhstan</option>
+                            <option>Kuwait</option>
+                            <option>Kyrgyzstan</option>
+                            <option>Kiribati</option>
+                            <option>Libya</option>
+                            <option>Malaysia</option>
+                            <option>Mexico</option>
+                            <option>Morocco</option>
+                            <option>Mozambique</option>
+                            <option>Niger</option>
+                            <option>Nigeria</option>
+                            <option>Netherlands</option>
+                            <option>Portugal</option>
+                            <option>Russia</option>
+                            <option>Rwanda</option>
+                            <option>Sudan</option>
+                            <option>South Sudan</option>
+                            <option>South Africa</option>
+                            <option>Tanzania</option>
+                            <option>Tunisia</option>
                             <option>United States</option>
+                            <option>Uganda</option>
+                            <option>United Arab Emirates</option>
+                            <option>United States of America</option>
+                            <option>United Kingdom</option>
+                            <option>Uzbekistan</option>
+                            <option>Zambia</option>
+                            <option>Zimbambwe</option>
                         </select>
                         <div class="invalid-feedback">
                             Please select a valid country.
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label asp-for="Order.State" for="state">State</label>
-                        <select asp-for="Order.State" class="custom-select d-block w-100" id="state" required>
-                            <option value="">Choose...</option>
-                            <option>California</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please provide a valid state.
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -157,10 +195,6 @@
                     <div class="custom-control custom-radio">
                         <input asp-for="Order.PaymentMethod" id="debit" name="paymentMethod" type="radio" value="Debit card" class="custom-control-input" required>
                         <label asp-for="Order.PaymentMethod" class="custom-control-label" for="debit">Debit card</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input asp-for="Order.PaymentMethod" id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
-                        <label asp-for="Order.PaymentMethod" class="custom-control-label" for="paypal">Paypal</label>
                     </div>
                 </div>
                 <div class="row">

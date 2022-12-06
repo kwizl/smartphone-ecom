@@ -3,13 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AspnetRunBasics</title>
+    <title>@ViewData["Title"] - SmartPhones</title>
 
     <!-- CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css">
     <link href="~/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
 
 </head>
 <body>
@@ -17,7 +18,7 @@
 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">AspnetRunBasics</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">SmartPhones</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -36,9 +37,6 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Order">Order</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Contact">Contact</a>
-                        </li>
                     </ul>
 
                     <form class="form-inline my-2 my-lg-0">
@@ -52,7 +50,6 @@
                         </div>
                         <a class="btn btn-success btn-sm ml-3" asp-area="" asp-page="/Cart">
                             <i class="fa fa-shopping-cart"></i> Cart
-                            <span class="badge badge-light">3</span>
                         </a>
                     </form>
                 </div>
