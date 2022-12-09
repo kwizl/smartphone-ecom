@@ -32,13 +32,13 @@ services:
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
   basket.api:
-    image: ${DOCKER_REGISTRY-}basketapi
+    image: ${DOCKER_REGISTRY-}kwizl1234/basketapi
     build:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
 
   discount.api:
-    image: ${DOCKER_REGISTRY-kwizl1234/}discountapi
+    image: ${DOCKER_REGISTRY-}kwizl1234/discountapi
     build:
       context: .
       dockerfile: Services/Discount/Discount.API/Dockerfile
@@ -56,13 +56,13 @@ services:
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
 
   healthchecker.ecom:
-    image: ${DOCKER_REGISTRY-}healthchecker.ecom
+    image: ${DOCKER_REGISTRY-}kwizl1234/healthchecker.ecom
     build:
       context: .
       dockerfile: Services/Monitoring/HealthChecker/Dockerfile
 
   ocelotapigw:
-    image: ${DOCKER_REGISTRY-}ocelotapigw
+    image: ${DOCKER_REGISTRY-}kwizl1234/ocelotapigw
     build:
       context: .
       dockerfile: ApiGateways/OcelotApiGW/Dockerfile
