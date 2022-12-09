@@ -4,6 +4,7 @@ It is a web application where people people can purchase smartphones online. It 
 ## Built With
 
 - .NET 5
+- .NET 6
 - ASP.NET Core 5.0
 - Docker
 - Redis
@@ -21,7 +22,7 @@ It is a web application where people people can purchase smartphones online. It 
 
 [Live Demo](https://smartdevphones.com/)
 
-![screenshot](./img/img.png)
+![screenshot](./src/img/img.PNG)
 
 ## Getting Started
 
