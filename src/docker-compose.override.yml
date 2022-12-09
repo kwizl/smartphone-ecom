@@ -1,0 +1,194 @@
+version: '3.4'
+
+services:
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  basketdb:
+    container_name: basketdb
+    restart: always
+    ports:
+      - "5008:6379"
+        
+  discountdb:
+    container_name: discountdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=DiscountDB
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  orderdb:
+    container_name: mssqlserverdb
+    environment:
+      SA_PASSWORD: "OrderAPI2022!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    restart: always
+    ports:
+      - "1401:1433"
+
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@smartecom.com
+      - PGADMIN_DEFAULT_PASSWORD=admin1234
+    restart: always
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8002:8002"
+      - "9000:9000"
+    volumes:    
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  catalog.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+    depends_on:
+      - catalogdb
+    ports:
+      - "8000:80"
+
+  basket.api:
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=basketdb:6379"
+      - "GrpcSettings:DiscountUrl=http://discount.grpc"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - basketdb
+      - rabbitmq
+    ports:
+      - "8001:80"
+
+  discount.api:
+    container_name: discount.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDB;User Id=admin;Password=admin1234;"
+    depends_on:
+      - discountdb
+    ports:
+      - "8003:80"
+
+  discount.grpc:
+    container_name: discount.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDB;User Id=admin;Password=admin1234;"
+    depends_on:
+      - discountdb
+    ports:
+      - "8004:80"
+
+  mongoclient:
+    container_name: mongoclient
+    restart: always
+    environment:
+      - "MONGO_URL=mongodb://catalogdb:27017"
+    ports:
+      - "3000:3000"
+    volumes:    
+      - mongoclient_data:/data/db mongoclient/mongoclient
+
+  ordering.api: 
+    container_name: ordering.api
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderingConnectionString=Data Source=orderdb;Database=OrderDB;User Id=sa;Password=OrderAPI2022!;Integrated Security=False;MultipleActiveResultSets=true;"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - orderdb
+      - rabbitmq
+    ports:
+      - "8006:80"
+
+  healthchecker.ecom:
+    container_name: healthchecker.ecom
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - HealthChecksUI__HealthChecks__0__Name=Basket API
+      - HealthChecksUI__HealthChecks__0__Uri=http://host.docker.internal:8001/healthchecker
+      - HealthChecksUI__HealthChecks__1__Name=Catalog API
+      - HealthChecksUI__HealthChecks__1__Uri=http://host.docker.internal:8000/healthchecker
+      - HealthChecksUI__HealthChecks__2__Name=Discount API
+      - HealthChecksUI__HealthChecks__2__Uri=http://host.docker.internal:8003/healthchecker
+      - HealthChecksUI__HealthChecks__3__Name=Ordering API
+      - HealthChecksUI__HealthChecks__3__Uri=http://host.docker.internal:8006/healthchecker
+    restart: always
+    ports:
+      - "6008:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  ocelotapigw:
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8010:80"
+
+  shopping.aggregator:
+    container_name: shopping.aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:CatalogUrl=http://catalog.api"
+      - "ApiSettings:BasketUrl=http://basket.api"
+      - "ApiSettings:OrderingUrl=http://ordering.api"
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8005:80"
+
+  aspnetrunbasics:
+    container_name: aspnetrunbasics
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    depends_on:
+      - ocelotapigw
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8009:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

@@ -1,0 +1,94 @@
+version: '3.4'
+
+services:
+  catalogdb:  
+    image: mongo
+
+  basketdb:  
+    image: redis
+
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  discountdb:  
+    image: postgres
+
+  mongoclient:
+    image: mongoclient/mongoclient:4.0.0
+
+  pgadmin:  
+    image: dpage/pgadmin4
+
+  portainer:
+    image: portainer/portainer-ce
+   
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}kwizl1234/catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+
+  basket.api:
+    image: ${DOCKER_REGISTRY-}kwizl1234/basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+
+  discount.api:
+    image: ${DOCKER_REGISTRY-}kwizl1234/discountapi
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.API/Dockerfile
+
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}kwizl1234/discountgrpc
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.Grpc/Dockerfile
+
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}kwizl1234/orderingapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+
+  healthchecker.ecom:
+    image: ${DOCKER_REGISTRY-}kwizl1234/healthchecker.ecom
+    build:
+      context: .
+      dockerfile: Services/Monitoring/HealthChecker/Dockerfile
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}kwizl1234/ocelotapigw
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGW/Dockerfile
+
+  shopping.aggregator:
+    image: ${DOCKER_REGISTRY-}kwizl1234/shoppingaggregator
+    build:
+      context: .
+      dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
+
+  aspnetrunbasics:
+    image: ${DOCKER_REGISTRY-}kwizl1234/aspnetrunbasics
+    build:
+      context: .
+      dockerfile: WebApps/AspnetRunBasics/Dockerfile
+
+volumes:
+  mongo_data:
+  portainer_data:
+  postgres_data:
+  pgadmin_data:
+  mongoclient_data:
+
+
+
+
+
+
+
